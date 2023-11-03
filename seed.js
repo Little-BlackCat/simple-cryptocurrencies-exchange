@@ -1,0 +1,102 @@
+const seed = async () => {
+	const User = require("./models/userModel");
+	const Cryptocurrency = require("./models/cryptocurrencyModel");
+	const Wallets = require("./models/walletModel");
+	const Transaction = require("./models/transactionModel");
+
+	const seedData = [
+		{
+			username: "johndoe",
+			email: "johndoe@example.com",
+			phone_number: "099-999-9999",
+			created_at: new Date(),
+			updated_at: new Date(),
+		},
+		{
+			username: "janedoe",
+			email: "janedoe@example.com",
+			phone_number: "088-888-8888",
+			created_at: new Date(),
+			updated_at: new Date(),
+		},
+	];
+
+	const cryptocurrencies = [
+		{
+			name: "Bitcoin",
+			symbol: "BTC",
+			current_price: 50000,
+		},
+		{
+			name: "Ethereum",
+			symbol: "ETH",
+			current_price: 4000,
+		},
+		{
+			name: "Tether",
+			symbol: "USDT",
+			current_price: 1,
+		},
+	];
+
+	try {
+		// ลบข้อมูลทั้งหมดในฐานข้อมูล
+		await User.deleteMany({});
+		await Cryptocurrency.deleteMany({});
+		await Wallets.deleteMany({});
+
+		// บันทึกข้อมูลผู้ใช้
+		await User.insertMany(seedData);
+
+		// บันทึกข้อมูลสกุลเงินดิจิทัล
+		await Cryptocurrency.insertMany(cryptocurrencies);
+
+		const users = await User.find();
+
+		// Wallets
+		const wallets = [
+			{
+				balance: 200000,
+				user_id: users[0]._id,
+			},
+			{
+				balance: 300000,
+				user_id: users[1]._id,
+			},
+		];
+
+		await Wallets.insertMany(wallets);
+
+		const walletId = await Wallets.find();
+		const cryptocurrency = await Cryptocurrency.find();
+
+		// Transaction
+		const transactions = [
+			{
+				type: "buy",
+				amount: 0.0234,
+				price: 0.234,
+				source_wallet_id: walletId[0]._id,
+				destination_wallet_id: walletId[1]._id,
+				cryptocurrency_id: cryptocurrency[0]._id,
+			},
+			{
+				type: "sell",
+				amount: 0.0325,
+				price: 0.325,
+				source_wallet_id: walletId[1]._id,
+				destination_wallet_id: walletId[0]._id,
+				cryptocurrency_id: cryptocurrency[2]._id,
+			},
+		];
+
+		await Transaction.insertMany(transactions);
+
+		console.log("complete run seed...")
+	} catch (error) {
+		console.error("เกิดข้อผิดพลาดในการลบหรือสร้างข้อมูล:", error);
+	}
+};
+
+// module.exports = seed;
+seed();
