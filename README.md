@@ -11,7 +11,7 @@ This project is a simple Cryptocurrency exchange application built using `JavaSc
 
 ## Database Entity-Relationship Diagram (ERD)
 
-![alt text](https://github.com/Little-BlackCat/simple-cryptocurrencies-exchange/blob/main/src/assets/view.png "view")
+![alt text](https://github.com/Little-BlackCat/simple-cryptocurrencies-exchange/blob/main/images/Cryptocurrency%20exchange.svg "Cryptocurrency exchange")
 
 ## Prerequisites
 
@@ -36,7 +36,7 @@ This command will build the project and start the containers in detached mode.
 
 The project should now be up and running.
 
-![alt text]([https://github.com/Little-BlackCat/simple-cryptocurrencies-exchange/blob/main/images/Cryptocurrency%20exchange.svg], "Cryptocurrency exchange")
+![alt text](https://github.com/Little-BlackCat/simple-cryptocurrencies-exchange/blob/main/images/docker.png "docker")
 
 ## Access the Documentation
 You can access the API documentation using Swagger at the following URL:
