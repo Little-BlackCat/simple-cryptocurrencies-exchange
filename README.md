@@ -42,6 +42,8 @@ The project should now be up and running.
 You can access the API documentation using Swagger at the following URL:
 http://localhost:3000/api-docs
 
+![alt text](https://github.com/Little-BlackCat/simple-cryptocurrencies-exchange/blob/main/images/swagger-docs.png "swagger-docs")
+
 Enjoy using the Cryptocurrency Exchange project!
 
 ## Shutdown and Cleanup
