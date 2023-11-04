@@ -1,6 +1,8 @@
 const User = require("../models/userModel");
 
 exports.getAllUsers = async (req, res) => {
+	// #swagger.tags = ["User"]
+	// #swagger.summary = "Get all users"
 	try {
 		const users = await User.find();
 		res.status(200).json({
@@ -18,13 +20,15 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.getOneUser = async (req, res) => {
+	// #swagger.tags = ["User"]
+	// #swagger.summary = "Get user by id"
 	try {
 		const user = await User.findById(req.params.id);
-		if(!user) {
+		if (!user) {
 			return res.status(404).json({
 				status: "fail",
-				data: "id not found"
-			})
+				data: "id not found",
+			});
 		}
 
 		// find user's wallet
@@ -44,9 +48,14 @@ exports.getOneUser = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
+	// #swagger.tags = ["User"]
+	// #swagger.summary = "Create user"
+	const { username, email, phone_number } = req.body;
 	try {
 		const user = await User.create({
-			...req.body,
+			username,
+			email,
+			phone_number,
 			created_at: new Date(),
 			updated_at: new Date(),
 		});
@@ -66,6 +75,8 @@ exports.createUser = async (req, res) => {
 };
 
 exports.createUserMany = async (req, res) => {
+	// #swagger.tags = ["User"]
+	// #swagger.summary = "Create many users"
 	try {
 		const users = await User.insertMany(req.body);
 
@@ -84,11 +95,16 @@ exports.createUserMany = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
+	// #swagger.tags = ["User"]
+	// #swagger.summary = "Update user by id"
+	const { username, email, phone_number } = req.body;
 	try {
 		const user = await User.findByIdAndUpdate(
 			req.params.id,
 			{
-				...req.body,
+				username,
+				email,
+				phone_number,
 				updated_at: new Date(),
 			},
 			{
@@ -111,13 +127,15 @@ exports.updateUser = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
+	// #swagger.tags = ["User"]
+	// #swagger.summary = "Delete user by id"
 	try {
 		const user = await User.findById(req.params.id);
-		if(!user) {
+		if (!user) {
 			return res.status(404).json({
 				status: "fail",
-				data: "id not found"
-			})
+				data: "id not found",
+			});
 		}
 		await User.findByIdAndDelete(req.params.id);
 
@@ -132,8 +150,10 @@ exports.deleteUser = async (req, res) => {
 };
 
 exports.deleteUserMany = async (req, res) => {
+	// #swagger.tags = ["User"]
+	// #swagger.summary = "Delete many users"
 	try {
-		await User.deleteMany()
+		await User.deleteMany();
 		res.status(200).json({
 			status: "success",
 		});
@@ -142,4 +162,4 @@ exports.deleteUserMany = async (req, res) => {
 			status: "fail",
 		});
 	}
-}
+};

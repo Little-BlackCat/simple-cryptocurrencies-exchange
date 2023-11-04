@@ -1,7 +1,8 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const connectWithRetry = require("./utils/database");
-const seed = require("./seed")
+const seed = require("./seed");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-docs/swagger.json");
 
 const userRoute = require("./routes/userRoute");
 const walletRoute = require("./routes/walletRoute");
@@ -14,7 +15,11 @@ app.use(express.json());
 connectWithRetry();
 // seed();
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.get("/", (req, res) => {
+	// #swagger.tags = ["Testing"]
+	// #swagger.summary = "Test API"
+	// #swagger.description = "Test API before use another."
 	res.send("<h1>Hello Wolrd!!!</h1>");
 });
 

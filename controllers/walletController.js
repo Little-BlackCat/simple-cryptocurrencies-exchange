@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const Wallet = require("../models/walletModel");
 
 exports.getAllWallets = async (req, res) => {
+	// #swagger.tags = ["Wallets"]
+	// #swagger.summary = "Get all Wallets"
 	try {
 		const wallets = await Wallet.find();
 		res.status(200).json({
@@ -19,8 +21,10 @@ exports.getAllWallets = async (req, res) => {
 };
 
 exports.getOneWallet = async (req, res) => {
+	// #swagger.tags = ["Wallets"]
+	// #swagger.summary = "Get Wallet by id"
 	try {
-		const walletId = new mongoose.Types.ObjectId(req.params.id)
+		const walletId = new mongoose.Types.ObjectId(req.params.id);
 		const wallet = await Wallet.findById(walletId);
 		if (!wallet) {
 			return res.status(404).json({
@@ -42,9 +46,13 @@ exports.getOneWallet = async (req, res) => {
 };
 
 exports.createWallet = async (req, res) => {
+	// #swagger.tags = ["Wallets"]
+	// #swagger.summary = "Create Wallets"
+	const { balance, user_id } = req.body;
 	try {
 		const wallet = await Wallet.create({
-			...req.body,
+			balance: Number(balance),
+			user_id,
 			created_at: new Date(),
 			updated_at: new Date(),
 		});
@@ -64,8 +72,10 @@ exports.createWallet = async (req, res) => {
 };
 
 exports.createWalletMany = async (req, res) => {
+	// #swagger.tags = ["Wallets"]
+	// #swagger.summary = "Create many Wallets"
 	try {
-		const wallets = await Wallet.insertMany(req.body)
+		const wallets = await Wallet.insertMany(req.body);
 
 		res.status(200).json({
 			status: "success",
@@ -79,15 +89,19 @@ exports.createWalletMany = async (req, res) => {
 			status: "fail",
 		});
 	}
-}
+};
 
 exports.updateWallet = async (req, res) => {
+	// #swagger.tags = ["Wallets"]
+	// #swagger.summary = "Update Wallet by id"
+	const { balance, user_id } = req.body;
 	try {
-		const walletId = new mongoose.Types.ObjectId(req.params.id)
+		const walletId = new mongoose.Types.ObjectId(req.params.id);
 		const wallet = await Wallet.findByIdAndUpdate(
 			walletId,
 			{
-				...req.body,
+				balance: Number(balance),
+				user_id,
 				updated_at: new Date(),
 			},
 			{
@@ -110,8 +124,10 @@ exports.updateWallet = async (req, res) => {
 };
 
 exports.deleteWallet = async (req, res) => {
+	// #swagger.tags = ["Wallets"]
+	// #swagger.summary = "Delete Wallet by id"
 	try {
-		const walletId = new mongoose.Types.ObjectId(req.params.id)
+		const walletId = new mongoose.Types.ObjectId(req.params.id);
 		const wallet = await Wallet.findById(walletId);
 		if (!wallet) {
 			return res.status(404).json({
