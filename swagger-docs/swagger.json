@@ -481,6 +481,23 @@
           }
         }
       }
+    },
+    "/api/v1/wallet_cryptocurrency/": {
+      "get": {
+        "tags": [
+          "WalletCryptocurrencies"
+        ],
+        "summary": "Get all WalletCryptocurrencies",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
     }
   }
 }

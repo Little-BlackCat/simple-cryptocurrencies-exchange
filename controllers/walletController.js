@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Wallet = require("../models/walletModel");
+const Cryptocurrency = require("../models/cryptocurrencyModel");
 
 exports.getAllWallets = async (req, res) => {
 	// #swagger.tags = ["Wallets"]
@@ -32,13 +33,19 @@ exports.getOneWallet = async (req, res) => {
 				data: "wallet not found",
 			});
 		}
+
+		// find wallet-crypto
+		const walletCryptocurrency = await wallet.getWalletCryptocurrency();
+
 		res.status(200).json({
 			status: "success",
 			data: {
 				wallet,
+				walletCryptocurrency,
 			},
 		});
 	} catch (error) {
+		console.log(error)
 		res.status(400).json({
 			status: "fail",
 		});

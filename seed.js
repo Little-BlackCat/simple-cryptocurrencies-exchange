@@ -3,6 +3,7 @@ const seed = async () => {
 	const Cryptocurrency = require("./models/cryptocurrencyModel");
 	const Wallets = require("./models/walletModel");
 	const Transaction = require("./models/transactionModel");
+	const WalletCryptocurrency = require("./models/walletCryptocurrencyModel")
 
 	const seedData = [
 		{
@@ -23,28 +24,40 @@ const seed = async () => {
 
 	const cryptocurrencies = [
 		{
-			name: "Bitcoin",
-			symbol: "BTC",
-			current_price: 50000,
+			"name": "Bitcoin",
+			"symbol": "BTC",
+			"current_price": 50000
 		},
 		{
-			name: "Ethereum",
-			symbol: "ETH",
-			current_price: 4000,
+			"name": "Ethereum",
+			"symbol": "ETH",
+			"current_price": 4000
 		},
 		{
-			name: "Tether",
-			symbol: "USDT",
-			current_price: 1,
+			"name": "Tether",
+			"symbol": "USDT",
+			"current_price": 1
 		},
-	];
+		{
+			"name": "Ripple",
+			"symbol": "XRP",
+			"current_price": 1.5
+		},
+		{
+			"name": "Litecoin",
+			"symbol": "LTC",
+			"current_price": 150
+		}
+	]
 
 	try {
 		// ลบข้อมูลทั้งหมดในฐานข้อมูล
 		await User.deleteMany({});
 		await Cryptocurrency.deleteMany({});
 		await Wallets.deleteMany({});
-
+		await Transaction.deleteMany({});
+		await WalletCryptocurrency.deleteMany({});
+		
 		// บันทึกข้อมูลผู้ใช้
 		await User.insertMany(seedData);
 
@@ -91,6 +104,32 @@ const seed = async () => {
 		];
 
 		await Transaction.insertMany(transactions);
+
+		// walletCryptocurrency
+		const walletCryptocurrencies = [
+			{
+				"cryptocurrency_amount": 2.5,
+				"wallet_id": walletId[0]._id,
+				"cryptocurrency_id": cryptocurrency[1]._id
+			},
+			{
+				"cryptocurrency_amount": 3.2,
+				"wallet_id": walletId[0]._id,
+				"cryptocurrency_id": cryptocurrency[2]._id
+			},
+			{
+				"cryptocurrency_amount": 1.0,
+				"wallet_id": walletId[1]._id,
+				"cryptocurrency_id": cryptocurrency[4]._id
+			},
+			{
+				"cryptocurrency_amount": 2.0,
+				"wallet_id": walletId[1]._id,
+				"cryptocurrency_id": cryptocurrency[3]._id
+			}
+		]
+		
+		await WalletCryptocurrency.insertMany(walletCryptocurrencies);
 
 		console.log("complete run seed...")
 	} catch (error) {

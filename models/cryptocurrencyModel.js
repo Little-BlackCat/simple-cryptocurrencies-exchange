@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Transaction = require('./transactionModel');
 
 const cryptocurrenciesSchema = new mongoose.Schema({
   name: { type: String, unique: true },

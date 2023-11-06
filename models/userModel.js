@@ -21,4 +21,4 @@ User.prototype.getWallet = async function() {
   return wallet;
 }
 
-module.exports = User;
+module.exports = User; 
